@@ -13,7 +13,7 @@ export const Modal = ({ photo, onCloseModal }) => {
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, []);
+  }, [onCloseModal]);
 
   const onOverlayClick = event => {
     if (event.currentTarget === event.target) {
