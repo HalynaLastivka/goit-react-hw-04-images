@@ -61,7 +61,7 @@ export const App = () => {
       };
       fetchFinderPhoto();
     }
-  }, [searchedPostId, page]);
+  }, [searchedPostId]);
 
   const handleSearchSubmit = event => {
     event.preventDefault();
