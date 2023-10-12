@@ -39,27 +39,7 @@ export const App = () => {
 
   useEffect(() => {
     if (searchedPostId !== null) {
-      const fetchFinderPhoto = async () => {
-        try {
-          setIsLoading(true);
-
-          const photosArray = await fetchFinder(searchedPostId, page + 1);
-
-          if (photosArray.hits) {
-            setPage(page + 1);
-            setPhotos(prevState => [
-              ...(prevState && prevState.length > 0 ? prevState : []),
-              ...photosArray.hits,
-            ]);
-            setTotalHits(photosArray.total);
-          }
-        } catch (error) {
-          setError(error.message);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-      fetchFinderPhoto();
+      fetchFinderBySearch();
     }
     // eslint-disable-next-line
   }, [searchedPostId]);
