@@ -16,6 +16,27 @@ export const App = () => {
   const [totalHits, setTotalHits] = useState(0);
   const [modal, setModal] = useState({ isOpen: false, data: null });
 
+  const fetchFinderPhoto = async () => {
+    try {
+      setIsLoading(true);
+
+      const photosArray = await fetchFinder(searchedPostId, page + 1);
+
+      if (photosArray.hits) {
+        setPage(prevState => prevState + 1);
+        setPhotos(prevState => [
+          ...(prevState && prevState.length > 0 ? prevState : []),
+          ...photosArray.hits,
+        ]);
+        setTotalHits(photosArray.total);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (searchedPostId !== null) {
       fetchFinderPhoto();
@@ -35,27 +56,6 @@ export const App = () => {
       event.currentTarget.reset();
     } else {
       alert('Поле search не може бути порожнім');
-    }
-  };
-
-  const fetchFinderPhoto = async () => {
-    try {
-      setIsLoading(true);
-
-      const photosArray = await fetchFinder(searchedPostId, page + 1);
-
-      if (photosArray.hits) {
-        setPage(prevState => prevState + 1);
-        setPhotos(prevState => [
-          ...(prevState && prevState.length > 0 ? prevState : []),
-          ...photosArray.hits,
-        ]);
-        setTotalHits(photosArray.total);
-      }
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 
