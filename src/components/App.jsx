@@ -46,7 +46,7 @@ export const App = () => {
           const photosArray = await fetchFinder(searchedPostId, page + 1);
 
           if (photosArray.hits) {
-            setPage(prevState => prevState + 1);
+            setPage(page + 1);
             setPhotos(prevState => [
               ...(prevState && prevState.length > 0 ? prevState : []),
               ...photosArray.hits,
