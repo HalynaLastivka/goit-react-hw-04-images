@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import css from 'styles.module.css';
 
 export const Modal = ({ photo, onCloseModal }) => {

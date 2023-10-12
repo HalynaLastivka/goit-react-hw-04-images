@@ -8,7 +8,6 @@ export default class Searchbar extends Component {
         <form onSubmit={this.props.onSubmit} className={css.SearchForm}>
           <button type="submit" className={css.SearchFormbutton}>
             GO
-            {/* <span className={css.SearchFormbuttonlabel}>Search</span> */}
           </button>
           <input
             className={css.SearchForminput}
