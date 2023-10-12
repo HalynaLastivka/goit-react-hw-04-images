@@ -61,6 +61,7 @@ export const App = () => {
       };
       fetchFinderPhoto();
     }
+    // eslint-disable-next-line
   }, [searchedPostId, page]);
 
   const handleSearchSubmit = event => {
