@@ -16,7 +16,7 @@ export const App = () => {
   const [totalHits, setTotalHits] = useState(0);
   const [modal, setModal] = useState({ isOpen: false, data: null });
 
-  const fetchFinderPhoto = async () => {
+  const fetchFinderBySearch = async () => {
     try {
       setIsLoading(true);
 
@@ -39,9 +39,29 @@ export const App = () => {
 
   useEffect(() => {
     if (searchedPostId !== null) {
+      const fetchFinderPhoto = async () => {
+        try {
+          setIsLoading(true);
+
+          const photosArray = await fetchFinder(searchedPostId, page + 1);
+
+          if (photosArray.hits) {
+            setPage(prevState => prevState + 1);
+            setPhotos(prevState => [
+              ...(prevState && prevState.length > 0 ? prevState : []),
+              ...photosArray.hits,
+            ]);
+            setTotalHits(photosArray.total);
+          }
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setIsLoading(false);
+        }
+      };
       fetchFinderPhoto();
     }
-  }, [searchedPostId]);
+  }, [searchedPostId, page]);
 
   const handleSearchSubmit = event => {
     event.preventDefault();
@@ -87,7 +107,7 @@ export const App = () => {
       ) : (
         searchedPostId && !isLoading && <p>Not found :(</p>
       )}
-      {showPosts && showLoad && <Button onClick={fetchFinderPhoto} />}
+      {showPosts && showLoad && <Button onClick={fetchFinderBySearch} />}
 
       {modal.isOpen && <Modal onCloseModal={onCloseModal} photo={modal.data} />}
     </div>
